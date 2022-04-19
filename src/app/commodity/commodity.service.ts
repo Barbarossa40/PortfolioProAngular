@@ -2,7 +2,7 @@ import { HttpClient,HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserCommodity } from '../shared/interfaces/commodity-interfaces/user-commodity';
 import { Coins } from '../shared/interfaces/commodity-interfaces/coins';
-import { map, Subject } from 'rxjs';
+import { BehaviorSubject, map, Subject, switchMap } from 'rxjs';
 import { CoinDetail } from '../shared/interfaces/commodity-interfaces/coin-detail';
 
 @Injectable({
@@ -23,6 +23,8 @@ export class CommodityService {
 
 
   constructor(private http: HttpClient) { }
+
+ 
 
   getSearchResult(search: string, type: string) {
     console.log(`${this.apiUri}/Search?search=${search}&type=${type}`);

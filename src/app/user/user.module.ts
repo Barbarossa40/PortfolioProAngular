@@ -11,6 +11,7 @@ import { PortfolioUpdateComponent } from './portfolio-update/portfolio-update.co
 import { CommodityResolver } from './commodity-resolver.service';
 
 import { ChangesResolver } from './changes-resolver.service';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 
 @NgModule({
@@ -26,10 +27,6 @@ import { ChangesResolver } from './changes-resolver.service';
     CommonModule,
     CommodityModule,
     RouterModule.forChild([
-     {
-      path:'',
-      component:UserProfileComponent
-     },
     {
     path: 'user-profile/:id/details',
      component: UserCommodityDetails,

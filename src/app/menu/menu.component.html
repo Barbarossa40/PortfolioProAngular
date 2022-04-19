@@ -4,12 +4,15 @@
   <a class="active" [routerLink]="['']" routerLinkActive="active" 
   [routerLinkActiveOptions]="{exact: true}"><img [src]="imageHome" alt="home icon" width = "25" height = "25"></a>
   <a class="active" [routerLink]="['/search-stock']" routerLinkActive="active" 
-  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageSearch" alt="search icon" width = "25" height = "25"></a>
-  <a *ngIf='!isUserAuthenticated'class="active" [routerLink]="['auth/login']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageSearch" alt="search icon" width = "25" height = "25">Search</a>
+  <a *ngIf='!currentUser?.isAuthenticated'class="active" [routerLink]="['auth/login']" routerLinkActive="active" 
   [routerLinkActiveOptions]="{exact: true}"><img [src]="imageLogin" alt="login icon" width = "25" height = "25"> Login</a>
-  <a *ngIf='isUserAuthenticated'class="active" [routerLink]="['auth/login']" routerLinkActive="active" 
-  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageLogin" alt="login icon" width = "25" height = "25" <button class="btn btn-link" style="color:blue;" (click)="logout()">Logout</button>> 
+  <a *ngIf='currentUser?.isAuthenticated'class="active" (click)="logout()"> <img [src]="imageLogin" alt="login icon" width = "25" height = "25"> Logout
   </a>
   <a class="active" [routerLink]="['auth/register']" routerLinkActive="active" 
   [routerLinkActiveOptions]="{exact: true}"><img [src]="imageRegister" alt="registration icon" width = "25" height = "25">Register</a>
+  <a *ngIf='currentUser?.isAuthenticated' class="active"  style="float:right" [routerLink]="['/user-profile']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}">{{userName}}</a>
 </div>
+
+

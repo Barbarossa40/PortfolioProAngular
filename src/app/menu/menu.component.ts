@@ -13,24 +13,25 @@ export class MenuComponent implements OnInit {
   
   currentUser?:AuthResponseDto;
   userName:any;
- 
+  isUserAuthenticated:boolean =false
 
   imageHome = 'assets/images/home.png'
   imageSearch = 'assets/images/magnifier.png'
   imageLogin = 'assets/images/log-in.png'
   imageRegister = 'assets/images/edit.png'
+  imageProfile ='/assets/images/profile3.png'
 
   constructor(private _authService: AuthService, private _router: Router) { 
-
     this._authService.currentUser.subscribe(resp => this.currentUser = resp);
-
+    
   }
 
   ngOnInit(): void {
+
+
+    if(this.currentUser?.isAuthenticated){
     this.userName=this.currentUser?.email.substring(0, this.currentUser?.email.lastIndexOf("@"))
-  
-  
-    
+    }
 
   }
 

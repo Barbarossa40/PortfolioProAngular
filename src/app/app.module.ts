@@ -42,10 +42,10 @@ import { AuthModule } from './auth/auth.module';
       config: {
         allowedDomains: ["localhost:4200"],
         disallowedRoutes: []
-        tokenGetter:() => {
-          return localStorage.getItem('token'); },
-          allowedDomains: ['http://localhost:4200']
-      }
+      //   tokenGetter:() => {
+      //     return localStorage.getItem('token'); },
+      //     allowedDomains: ['http://localhost:4200']
+       }
     }),
 
     AppRoutingModule

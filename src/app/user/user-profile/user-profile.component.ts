@@ -19,7 +19,6 @@ export class UserProfileComponent implements OnInit {
   userName = '';
   commodities: UserChange[] =[];
   currentUser!:AuthResponseDto;
-  notifierSubscription!: Subscription; 
 
   
 

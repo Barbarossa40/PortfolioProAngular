@@ -1,9 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserChange } from '../shared/interfaces/user-interfaces/user-change';
-import { BehaviorSubject, map, observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, map, observable, Subject, switchMap, tap } from 'rxjs';
 import { Coins } from '../shared/interfaces/commodity-interfaces/coins';
 import { ChangeDto } from '../shared/interfaces/user-interfaces/change-dto';
+import { AuthService } from '../auth/auth.service';
+import { AuthDto } from '../shared/interfaces/auth-interfaces/login-models/auth-dto';
+import { AuthResponseDto } from '../shared/interfaces/auth-interfaces/login-models/auth-response-dto';
 
 
 
@@ -22,11 +25,16 @@ export class UserService {
   
  
   eventEmitterNotifier: EventEmitter<null> = new EventEmitter();
-  
-  constructor(private http: HttpClient) { 
+  currentUser!:AuthResponseDto;
 
+  constructor(private http: HttpClient, _authService:AuthService) {  
+    _authService.currentUser.subscribe(resp => this.currentUser = resp);
   }
  
+  private readonly tableRefresh = new BehaviorSubject(undefined);
+ 
+
+
   notifyAboutChange() {
     this.eventEmitterNotifier.emit();
   }
