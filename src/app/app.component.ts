@@ -13,7 +13,7 @@ import { UserService } from './user/user.service';
 export class AppComponent {
   title = 'portfolioproangular';
   currentUser?:AuthResponseDto | null;
-  notifierSubscription!: Subscription;
+ 
 
   constructor(private _authService: AuthService ){}
 

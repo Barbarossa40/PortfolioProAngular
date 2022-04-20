@@ -22,8 +22,7 @@ export class UserProfileComponent implements OnInit {
   message:string=''
   
 
-  constructor(public _authService :AuthService, private _userService:UserService, private _router:Router ) { 
-}
+  constructor(public _authService :AuthService, private _userService:UserService, private _router:Router ) { }
   ngOnInit(): void {
     this._authService.currentUser.subscribe(resp => this.currentUser = resp);
     

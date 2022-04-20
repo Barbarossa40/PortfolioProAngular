@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { UserCommodity } from '../shared/interfaces/commodity-interfaces/user-commodity';
 import { Coins } from '../shared/interfaces/commodity-interfaces/coins';
 import { BehaviorSubject, map, Subject, switchMap } from 'rxjs';
-import { CoinDetail } from '../shared/interfaces/commodity-interfaces/coin-detail';
+import { CoinPrice } from '../shared/interfaces/commodity-interfaces/coin-price';
+
 
 @Injectable({
   providedIn: 'root'
@@ -86,5 +87,11 @@ export class CommodityService {
 
   getCommodityByTicker(ticker:string){
     return this.http.get<UserCommodity[]>(`${this.apiUriCommodity}/ticker?ticker=${ticker}`)
+  }
+
+  getCoinPrice(coinUuid: string){
+
+    return this.http.get<CoinPrice>(`${this.apiUriCoin}/price?coinUuid=${coinUuid}`)
+    
   }
 }

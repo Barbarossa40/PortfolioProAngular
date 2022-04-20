@@ -36,7 +36,8 @@ export class AddUserAssetComponent implements OnInit {
 
   ngOnInit(): void { 
    const resolvedData:UserCommodityResolved = this.route.snapshot.data['resolvedCommodity'];
-   console.log()
+  
+   
    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
 
    this.changeForm=this.formBuilder.group({

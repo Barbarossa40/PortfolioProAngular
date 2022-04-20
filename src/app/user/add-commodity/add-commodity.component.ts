@@ -48,7 +48,7 @@ export class AddCommodityComponent implements OnInit {
   ngOnInit(): void { 
    
     this.sortForm = new FormGroup({
-      tickerSymbol: new FormControl("", [Validators.required]),
+      tickerSymbol: new FormControl("", [Validators.required, Validators.minLength(1), Validators.maxLength(6)]),
       assetClass: new FormControl("", [Validators.required])
     })
 
@@ -62,16 +62,10 @@ export class AddCommodityComponent implements OnInit {
      
   }
 
-  changeTextToUppercase(input:string) {
- 
-     
-  }
-  
-
   onSubmit(sortFormValue:any){
     const form = {...sortFormValue };
     this.commodity.type =form.assetClass
-    this.commodity.stockSymbol = form.tickerSymbol.toUpperCase();
+    this.commodity.stockSymbol = form.tickerSymbol.toUpperCase().trim();
 
     this.badSearch=form.tickerSymbol.toUpperCase();
     this.assetSearch(this.commodity)
@@ -114,15 +108,4 @@ export class AddCommodityComponent implements OnInit {
   addStock(){
     this._commodityService.addAsset(this.commodity)
     .subscribe(_ => this.doAddToPortfolio = true)}
-
-
-  // addToPortfolio(){
-  //     this._commodityService.getNewlyAddedAsset(this.commodity.commodityName, this.commodity.stockSymbol)
-  //       .subscribe((resp => {this._userService.notifyAboutChange;
-  //         this.router.navigate(['/portfolio-add'],{queryParams:{Id:resp.commodityId}})}))
-
-     
-  
-  //  }   <p *ngIf="!commodity">If you don't know the symbol use the search function below</p>
-
 }

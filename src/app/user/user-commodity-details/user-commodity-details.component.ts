@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators'
 import { AuthService } from 'src/app/auth/auth.service';
 import { CommodityService } from 'src/app/commodity/commodity.service';
 import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login-models/auth-response-dto';
-import { CoinDetail } from 'src/app/shared/interfaces/commodity-interfaces/coin-detail';
+import { CoinPrice } from 'src/app/shared/interfaces/commodity-interfaces/coin-price';
 import { UserCommodity } from 'src/app/shared/interfaces/commodity-interfaces/user-commodity';
 import { UserCommodityResolved } from 'src/app/shared/interfaces/commodity-interfaces/user-commodity-resolved';
 

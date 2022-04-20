@@ -48,19 +48,31 @@ export class UserService {
     return this.http.get<UserChange[]>(`${this.apiUriUser}/details?userid=${userid}&commid=${commId}`)
                     
   }
+  getChangeById(cId: number){
+
+    return this.http.get<UserChange>(`${this.apiUriUser}/change-id?cId=${cId}`)
+                    
+  }
  
   postChange(change:ChangeDto)
   { 
     return this.http.post<UserChange>(`${this.apiUriChange}`, change)
-    
+  
   }
 
-  putChange()
+  putChange(change: UserChange)
   {
-    this.http.put<UserChange>('https://jsonplaceholder.typicode.com/posts/1', body, { headers })
-  .subscribe(data => this.postId = data.id);
+    this.http.put<UserChange>(`${this.apiUriUser}`, change)
+  .subscribe()
   }
 
+  deleteChange(cId: number, id:string)
+  {
+    this.http.delete(`${this.apiUriUser}?cId=${cId}&id=${id}`)
+    .subscribe()
+
+
+  }
 
 }
 

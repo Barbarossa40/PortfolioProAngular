@@ -12,6 +12,7 @@ import { CommodityResolver } from './commodity-resolver.service';
 
 import { ChangesResolver } from './changes-resolver.service';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { AlterChangeComponent } from './alter-change/alter-change.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AuthGuard } from '../shared/guards/auth.guard';
     AddUserAssetComponent,
     UserCommodityDetails,
     PortfolioUpdateComponent,
+    AlterChangeComponent,
   ],
   imports: [
 
@@ -33,9 +35,13 @@ import { AuthGuard } from '../shared/guards/auth.guard';
      resolve:{resolvedCommodity: CommodityResolver}
     },
     {
-      path: 'user-profile/:id/update/:uid',
+      path: 'user-profile/:id/update/:uid',  
       component: PortfolioUpdateComponent,
-      resolve:{resolvedChanges: ChangesResolver}
+      resolve:{resolvedChanges: ChangesResolver},
+      children: [
+        {path: '', redirectTo: 'update', pathMatch: 'full' },
+        {path:'alter/:cid', component: AlterChangeComponent} 
+        ]
       },
     {
     path: 'add-commodity',

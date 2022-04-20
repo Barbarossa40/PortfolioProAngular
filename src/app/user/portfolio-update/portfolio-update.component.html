@@ -1,30 +1,70 @@
 
     <h2>Last Transaction for {{mostRecent.commodity?.commodityName}}: {{mostRecent.commodity?.stockSymbol}}</h2>
-    <hr>    
+    <hr>
+    <h4>Account Owner:  {{userName}}</h4>
+    <div  *ngIf="coinPrice">
+        <table class="pricing"> 
+            <thead>
+            <th>Shares Owned</th>    
+            <th>Current Price</th>
+            <th>Time Stamp</th>
+            <th> Current Value of Holdings</th>
+            </thead>
+            <tbody>
+            <tr> 
+                <td>{{mostRecent.totalAmount}}</td>
+                <td>{{ +coinPrice.price|currency}}</td>
+                <td>{{coinPrice.timeStamp}}</td>
+                <td>{{mostRecent.totalAmount * +coinPrice.price|currency}}</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+    <div *ngIf="quoteDetail">
+        <table class="pricing">
+        <thead>
+        <th>Value Per Share</th>
+        <th>Time Stamp</th>
+        <th>%Change</th>
+        <th>Open Price: {{today}} </th>
+        <th> Current Value of Holdings</th>
+        </thead>
+        <tbody>
+        <tr  *ngFor="let detail of quoteDetail; let i = index"> 
+            <td>{{detail?.attributes?.last | currency}}</td>
+            <td>{{detail?.attributes?.dateTime | date}}</td>
+            <td *ngIf="detail?.attributes.percentChange > 0" class="positive">{{detail.attributes.percentChange | number:'1.0-2'}}</td>
+            <td *ngIf="detail?.attributes.percentChange < 0" class="negative">{{detail.attributes.percentChange | number:'1.0-2'}}</td>
+            <td>{{detail?.attributes?.open | currency}}</td>
+            <td>{{mostRecent.totalAmount * detail?.attributes?.last | currency}}</td>
+         <br>
+    </tr>
+</tbody>
+</table>
+    </div>   
+ <div>       
     <ul>
     <li> Transaction#:{{mostRecent.changeId}}</li>
     <li> Date of Change{{mostRecent.changeTime}}</li>
-    <li> Previous:{{mostRecent.totalAmount - mostRecent.changeAmount}}</li>
-    <li> {{mostRecent.commodity?.type}}</li>
+    <li> Previous Total:{{mostRecent.totalAmount - mostRecent.changeAmount}}</li>
+    <li> Asset Class: {{mostRecent.commodity?.type}}</li>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <br>
+              <button class="btn btn-primary mr-3"
+                      style="width:80px"
+                      type="button" >
+                      <a class="navbar-brand"[routerLink]="['alter',mostRecent.changeId]"
+                    routerLinkActive="active">Edit</a></button>
+              <button class="btn btn-outline-warning"
+                      style="width:80px"
+                      type="button"
+                    (click)='onClick()'>New</button>
+            </div>
+          </div>
+        </ul>  
     <br>
-
-    
-    <h2>Previous Transactions</h2>
-    <hr>
-    <ul *ngFor="let change of changeHistory; let i = index">
-    <li>Transaction# {{change.changeId}}</li>
-    <br>
-    <li>Date: {{change.changeTime}}</li>
-    <li>Previous Total: {{change.totalAmount - change.changeAmount }}</li>
-    <li>Current Total:  {{change.totalAmount}}</li>
-    <li>name: {{change.commodity?.commodityName}}</li>
-    <li>Symbol: {{change.commodity?.stockSymbol}}</li>
-    <li>Type: {{change.commodity?.type}}</li>
-    <br >
-</ul>
-<button 
-type="submit" class="btn btn-primary"(click)="onClick()" >Update your total?
-</button>
+</div> 
 <br>
 <div *ngIf="reveal"> 
     <hr>
@@ -43,4 +83,74 @@ type="submit" class="btn btn-primary"(click)="onClick()" >Update your total?
             </div>
         </div>
     </form>
+</div>
+
+<div class="card-body">
+<div class="wizard">
+<a [routerLink]="['update']"
+  routerLinkActive="active">
+ {{mostRecent.commodity!.commodityName}} Change/Delete:
+</a>
+<a [routerLink]="['update']"
+  routerLinkActive="active">
+ {{mostRecent.commodity!.commodityName}} Details:
+</a>
+
+<!-- <a [routerLink]="['tags']"
+  routerLinkActive="active">
+ Search Tags<span [ngClass]="{'fa fa-exclamation': !isValid('tags')}"></span>
+</a>
+</div>     
+<div class="container"> -->
+    <router-outlet></router-outlet>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-4">
+      <button class="btn btn-primary mr-3"
+              style="width:80px"
+              type="button"
+              title="Save your changes"
+              [disabled]=""
+              >
+        Save
+      </button>
+      <button class="btn btn-outline-secondary mr-3"
+              style="width:80px"
+              type="button"
+              title="Cancel your edits"
+              [routerLink]="['user-profile']">
+        Cancel
+      </button>
+      <button class="btn btn-outline-warning"
+              style="width:80px"
+              type="button"
+              title="Delete this transaction"
+             >
+        Delete
+      </button>
+    </div>
+  </div>
+
+<div>
+    <h2>Previous Transactions</h2>
+    <hr>
+ <p *ngIf="!changeHistory.length"> No previous transctions have been recorded</p>
+<div *ngIf="changeHistory">  
+    <ul *ngFor="let change of changeHistory; let i = index">
+    <li><b>Transaction# {{change.changeId}}</b></li>
+    <hr>
+    <br>
+    <li>Date: {{change.changeTime}}</li>
+    <li>Previous Total: {{change.totalAmount - change.changeAmount }}</li>
+    <li>Current Total:  {{change.totalAmount}}</li>
+    <li>Name: {{change.commodity?.commodityName}}</li>
+    <li>Symbol: {{change.commodity?.stockSymbol}}</li>
+    <li>Asset Class : {{change.commodity?.type}}</li>
+    <br>
+    <button  style="width:80px"><a class="navbar-brand"[routerLink]="['alter',mostRecent.changeId]"
+        routerLinkActive="active">Edit</a></button>
+    <br >
+    </ul>
+</div> 
 </div>

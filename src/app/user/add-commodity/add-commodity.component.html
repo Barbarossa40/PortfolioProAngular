@@ -2,7 +2,7 @@
     <div class="form-group row">
         <label for="tickerSymbol" class="col-form-label col-sm-2">Ticker:</label>
         <div class="col-md-5">
-            <input  (input)="changeTextToUppercase('tickerSymbol') "type="text" id="tickerSymbol" formControlName="tickerSymbol" class="form-control" />
+            <input type="text" id="tickerSymbol" formControlName="tickerSymbol" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
@@ -21,12 +21,10 @@
 <div>{{errorMessage}}</div>
 <div *ngIf="isStockSearch">
 <ul>
-    <li>
-       Company: {{commodity.commodityName}}
-    </li>
-    <li>
-        Company: {{commodity.stockSymbol}}
-     </li>
+    <li>Company: {{commodity.commodityName}}</li>
+    <li>Ticker: {{commodity.stockSymbol}}</li>
+    <li>Asset Class: {{commodity.type}}</li>
+
 </ul>
     <button
     type="submit"
@@ -58,7 +56,3 @@
 
 
 
-<!-- addToPortfolio(){
-    this._commodityService.getNewlyAddedAsset(this.commodity.commodityName, this.commodity.stockSymbol)
-      .subscribe((resp => {this._userService.notifyAboutChange;
-        this.router.navigate(['/portfolio'],{queryParams:{Id:resp.commodityId}})}) -->
