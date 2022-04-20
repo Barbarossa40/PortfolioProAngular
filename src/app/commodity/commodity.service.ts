@@ -53,36 +53,37 @@ export class CommodityService {
   }
 
 
+
+
+  getCommodityById(id?:number, symbol?:string, uuid?: string){
+  
+   console.log(id)
+   console.log(symbol)
+
+  if( id!== -1 || null &&  symbol ==''|| undefined){
+    console.log(id)
+    return this.http.get<UserCommodity>(`${this.apiUriCommodity}/${id}`)
+  }
+  else{
+      return this.getNewlyAddedAsset(symbol,uuid)
+    }
+  }
+
+
   getNewlyAddedAsset(symbol?:string, uuid?:string){
    
     console.log(uuid)
-    if(typeof uuid != 'undefined'){
+    if(uuid !== ''){
 
       return this.http.get<UserCommodity>(`${this.apiUriCommodity}/new?symbol=${symbol}&uuid=${uuid}`)
     }
     else{
+     console.log(symbol)
      
       return this.http.get<UserCommodity>(`${this.apiUriCommodity}/new?symbol=${symbol}`)
     }
   }
 
-  getCommodityById(id?:number, symbol?:string, uuid?: string){
-  
-   console.log(id)
-
-   if(typeof id!=='undefined'||null && typeof symbol =='undefined'||""){
-      
-    return this.http.get<UserCommodity>(`${this.apiUriCommodity}/${id}`)
-
-    }
-
-    else{
-
-      return this.getNewlyAddedAsset(symbol,uuid)
-    }
-  }
-
- 
   getCommodityByTicker(ticker:string){
     return this.http.get<UserCommodity[]>(`${this.apiUriCommodity}/ticker?ticker=${ticker}`)
   }

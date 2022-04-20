@@ -13,17 +13,17 @@ export class CommodityResolver implements Resolve<UserCommodityResolved>{
   constructor(private _commodityService:CommodityService, private _userService:UserService) { }
   
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UserCommodityResolved | Observable<UserCommodityResolved> | Promise<UserCommodityResolved> {
-    const id= Number(route.paramMap.get('id'))|| undefined;
-    const symbol = route.paramMap.get('symbol')||undefined;
-    const uuid  = route.paramMap.get('uuid')|| undefined;
+    const id= Number(route.paramMap.get('id'))|| -1;
+    const symbol = route.paramMap.get('symbol')||'';
+    const uuid  = route.paramMap.get('uuid')|| '';
     
-    if(typeof id == undefined && typeof symbol =='undefined'){
+    if( id == -1 &&  symbol ==''){
       const message ='blankform'
       return ({userCommodity:null, error: message});
     }
     return this._commodityService.getCommodityById(id, symbol, uuid)
     .pipe(
-      map(userCommodity => ({ userCommodity: userCommodity })))
+    map(userCommodity => ({ userCommodity: userCommodity })))
     
     }
   }

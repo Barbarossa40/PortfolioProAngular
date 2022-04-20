@@ -10,7 +10,7 @@
 
 <h2>Hello {{userName}}</h2>
 
-
+<h2>{{message}}</h2>
 <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -38,7 +38,7 @@
         <td><button><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'details']" routerLinkActive="active" 
           [routerLinkActiveOptions]="{exact: true}">Details</a></button></td>   
           <br>
-          <td><button><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'update',currentUser.id]" routerLinkActive="active" 
+          <td><button><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'update',currentUser!.id]" routerLinkActive="active" 
           [routerLinkActiveOptions]="{exact: true}">Update</a></button></td> 
           <br>
       </tr>

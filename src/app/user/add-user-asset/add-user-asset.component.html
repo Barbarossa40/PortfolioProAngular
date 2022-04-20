@@ -10,7 +10,7 @@
         <div class="form-group row">
             <label for="ticker" class="col-form-label col-sm-2">Ticker/Symbol</label>
             <div class="col-md-5">
-                <input type="text" id="ticker" formControlName="ticker" class="form-control" />
+                <input type="text" id="ticker" placeHolder="ex: MSFT for Microsoft" formControlName="ticker" class="form-control" />
             </div>
         </div>
         <br>
@@ -26,14 +26,13 @@
     <ul> 
         <li *ngFor='let commodity of userCommodity; let i=index'>
             {{i+1}} - {{commodity.commodityName}} | {{commodity.stockSymbol}} | {{commodity.type}} 
-            <button  type="submit" class="btn btn-primary"(click)="addPortfolio(commodity.commodityId)" >click to add to Watched</button>
+            <button  type="submit" class="btn btn-primary"(click)="addPortfolio(commodity.commodityId);showMatch=false" >add to portfolio</button>
         </li>
     </ul>
     <p>If not click here to add it to our database</p>
-    <button class="btn btn-primary">  
-        <a class="navbar-brand" [routerLink]="['/commodity']" routerLinkActive="active" 
+        <a class="navbar-brand" [routerLink]="['/add-commodity']" routerLinkActive="active" 
         [routerLinkActiveOptions]="{exact: true}">No</a>
-    </button>
+    
 </div>
     <div *ngIf="commodity"> 
         <form [formGroup]="changeForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(changeForm.value)">

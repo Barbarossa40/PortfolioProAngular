@@ -23,34 +23,30 @@ export class AddUserAssetComponent implements OnInit {
   tickerForm!:FormGroup;
   change!: ChangeDto
   qId: string ='';
-  currentUser!:AuthResponseDto;
+  currentUser?:AuthResponseDto | null;
   userCommodity: UserCommodity[] =[];
   showMatch?:Boolean
   commodity?:UserCommodity;
 
   
   constructor(private formBuilder:FormBuilder, private _authService: AuthService, private _commodityService:CommodityService, private _userService:UserService,private _router:Router, private route:ActivatedRoute) {
-    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
-    
-
-      this.changeForm=this.formBuilder.group({
-      newTotal: ['', [Validators.required]]
-    })
-      this.tickerForm =this.formBuilder.group({
-      ticker: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(7)]],
-    })
+  
   }
 
 
-  ngOnInit(): void {
-
-    
+  ngOnInit(): void { 
    const resolvedData:UserCommodityResolved = this.route.snapshot.data['resolvedCommodity'];
-   console.log(resolvedData.userCommodity?.commodityName)
-   console.log(resolvedData.error)
-  
+   console.log()
+   this._authService.currentUser.subscribe(resp => this.currentUser = resp);
 
-   if(resolvedData.userCommodity!== null){
+   this.changeForm=this.formBuilder.group({
+    newTotal: ['', [Validators.required]]
+  })
+    this.tickerForm =this.formBuilder.group({
+    ticker: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
+  })
+
+   if(resolvedData.userCommodity!= null){
 
     this.commodity = resolvedData.userCommodity;
     this.tickerForm.setValue({ticker:this.commodity!.stockSymbol});
@@ -58,9 +54,9 @@ export class AddUserAssetComponent implements OnInit {
 
     this.change={
      changeTime: new Date(),
-     changeAmount : 2,  ///need to fix
-     totalAmount: 0,
-     commodityId: 0,
+     changeAmount : -1, 
+     totalAmount: -1,
+     commodityId: -1,
      userId: ''
      }  
 
@@ -76,15 +72,17 @@ tickerSubmit(tickerValue:any){
 onSubmit(newTotalValue:any){
 const newTotal ={...newTotalValue} 
 this.change.totalAmount=newTotal.newTotal
-this.change.commodityId= this.commodity?.commodityId  // have to create opotion fro fresh form
-this.change.userId=this.currentUser.id
+this.change.commodityId= this.commodity?.commodityId
+this.change.userId=this.currentUser!.id
+this.change.changeAmount=newTotal.newTotal
+
 
 this._userService.postChange(this.change)
 .subscribe(resp =>{ this._userService.notifyAboutChange(); 
                     this._router.navigate(['/user-profile'])})
 }
 
-addPortfolio(id:any){
+addPortfolio(id:any, ){
   this._commodityService.getCommodityById(id).subscribe(resp=> this.commodity=resp)}
 
 }

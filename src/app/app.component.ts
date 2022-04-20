@@ -12,12 +12,13 @@ import { UserService } from './user/user.service';
 })
 export class AppComponent {
   title = 'portfolioproangular';
-  currentUser?:AuthResponseDto;
+  currentUser?:AuthResponseDto | null;
   notifierSubscription!: Subscription;
 
   constructor(private _authService: AuthService ){}
 
   ngOnInit(): void {
+  
     this._authService.currentUser.subscribe(x => this.currentUser = x);
 
     

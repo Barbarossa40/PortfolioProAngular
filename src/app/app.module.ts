@@ -41,13 +41,10 @@ import { AuthModule } from './auth/auth.module';
     JwtModule.forRoot({
       config: {
         allowedDomains: ["localhost:4200"],
-        disallowedRoutes: []
-      //   tokenGetter:() => {
-      //     return localStorage.getItem('token'); },
-      //     allowedDomains: ['http://localhost:4200']
-       }
-    }),
-
+        disallowedRoutes: [] 
+        }
+      }
+    ),
     AppRoutingModule
     
   ],

@@ -9,11 +9,11 @@
     </tr>
 <tr  *ngFor="let detail of quoteDetails; let i = index">
         
-        <td>{{detail.id}}</td>
-        <td>{{detail.attributes.name}}</td>
-        <td>${{detail.attributes.last}}</td>
-        <td *ngIf="detail.attributes.percentChange > 0" class="positive">{{detail.attributes.percentChange | number:'1.0-2'}}%</td>
-        <td *ngIf="detail.attributes.percentChange < 0" class="negative">{{detail.attributes.percentChange | number:'1.0-2'}}%</td>
+        <td>{{detail?.id}}</td>
+        <td>{{detail?.attributes?.name}}</td>
+        <td>${{detail?.attributes?.last}}</td>
+        <td *ngIf="detail?.attributes.percentChange > 0" class="positive">{{detail.attributes.percentChange | number:'1.0-2'}}%</td>
+        <td *ngIf="detail?.attributes.percentChange < 0" class="negative">{{detail.attributes.percentChange | number:'1.0-2'}}%</td>
         <br>
 </tr>
 </table>

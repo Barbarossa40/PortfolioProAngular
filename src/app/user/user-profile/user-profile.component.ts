@@ -18,18 +18,23 @@ import { CommodityService } from 'src/app/commodity/commodity.service';
 export class UserProfileComponent implements OnInit {
   userName = '';
   commodities: UserChange[] =[];
-  currentUser!:AuthResponseDto;
-
+  currentUser: AuthResponseDto | null = new AuthResponseDto;
+  message:string=''
   
 
-  constructor(public _authService :AuthService, private _userService:UserService ) { 
+  constructor(public _authService :AuthService, private _userService:UserService, private _router:Router ) { 
 }
   ngOnInit(): void {
     this._authService.currentUser.subscribe(resp => this.currentUser = resp);
-    this.getUserCommodities(this.currentUser.id)
- 
-  this.userName=this.currentUser.email.substring(0, this.currentUser.email.lastIndexOf("@"))
-  // this.notifierSubscription = this._userService.eventEmitterNotifier.subscribe(resp => { this.getUserCommodities(this.currentUser.id)})
+    
+    if(this.currentUser==null){
+      this.message='not allowed, bye felicia'
+      this._router.navigate(['auth/login'])
+    }else{
+      this.getUserCommodities(this.currentUser.id)
+      this.userName=this.currentUser.email.substring(0, this.currentUser.email.lastIndexOf("@"))
+    } 
+
 }
 
 private getUserCommodities(id:any){

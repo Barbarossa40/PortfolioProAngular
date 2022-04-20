@@ -19,16 +19,16 @@ export class AuthService {
    private readonly URL = "https://localhost:7168/api/accounts/";
 
 
-   private currentUserSubject: BehaviorSubject<AuthResponseDto>;
-    public currentUser: Observable<AuthResponseDto>;
+   private currentUserSubject: BehaviorSubject<AuthResponseDto | null>;
+    public currentUser: Observable<AuthResponseDto | null>;
    
    constructor(private _http: HttpClient,  public _jwtHelper: JwtHelperService, public _router: Router) {
-    this.currentUserSubject = new BehaviorSubject<AuthResponseDto>(JSON.parse(localStorage.getItem('currentUser') || '{}'));
+    this.currentUserSubject = new BehaviorSubject<AuthResponseDto|null>(JSON.parse(localStorage.getItem('currentUser') || '{}'));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): AuthResponseDto {    ///example of getter
-    return this.currentUserSubject.value;
+  public get currentUserValue(): AuthResponseDto | null {    ///example of getter
+   return this.currentUserSubject.value;
   }
 
    public registerUser = (body: RegistrationDto) => {
@@ -44,7 +44,7 @@ export class AuthService {
 
   public logout = () => {
     localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(new AuthResponseDto)
+    this.currentUserSubject.next(null)
 
   }
 

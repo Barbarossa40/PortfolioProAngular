@@ -19,13 +19,13 @@ import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login
 export class AddCommodityComponent implements OnInit {
  
   
-searchForm!:FormGroup;
+  sortForm!:FormGroup;
  submitted = false;
  isCryptoSearch = false;
  isStockSearch = false;
  doAddToPortfolio=false;
 
- currentUser!: AuthResponseDto
+ currentUser?: AuthResponseDto | null
 
 
  commodity!:UserCommodity;
@@ -33,7 +33,9 @@ searchForm!:FormGroup;
  stockDetail!: StockDetails
  crypto!:Coins[]
 
- 
+ errorMessage!:string | null;
+
+ badSearch:string=''
 
   change!:UserChange
 
@@ -45,7 +47,7 @@ searchForm!:FormGroup;
 
   ngOnInit(): void { 
    
-    this.searchForm = new FormGroup({
+    this.sortForm = new FormGroup({
       tickerSymbol: new FormControl("", [Validators.required]),
       assetClass: new FormControl("", [Validators.required])
     })
@@ -66,32 +68,39 @@ searchForm!:FormGroup;
   }
   
 
-  onSubmit(searchFormValue:any){
-    const form = {...searchFormValue };
+  onSubmit(sortFormValue:any){
+    const form = {...sortFormValue };
     this.commodity.type =form.assetClass
     this.commodity.stockSymbol = form.tickerSymbol.toUpperCase();
 
+    this.badSearch=form.tickerSymbol.toUpperCase();
     this.assetSearch(this.commodity)
+    
   }
 
   assetSearch(assetAdd:UserCommodity){
   
   if(assetAdd.type =='Stock')
    {this.isStockSearch=true;
+    this.isCryptoSearch=false;
 
     this._commodityService.userAssetSearch(this.commodity.stockSymbol)
       .pipe(map((resp)=> this.stockDetail= resp))
-       .subscribe(item=> this.commodity.commodityName = item.companyName)
-      console.log(this.commodity)};
-
+       .subscribe({next: resp => {this.commodity.commodityName = resp.companyName;  console.log(resp);
+                                  this.errorMessage=null},
+                  error:_=> this.errorMessage=`We couldn't find a company associated with ${this.badSearch}.  Use the search function below to help locate what you're after` ,
+                  complete:()=> this.sortForm.reset()})}
+                
       if(assetAdd.type=="Crypto"){
         this.isCryptoSearch=true;
+        this.isStockSearch=false;
 
+          console.log(this.isCryptoSearch)
         this._commodityService.userCryptoSearch(this.commodity.stockSymbol)
-        .subscribe(resp=>this.crypto = resp)
-        // .pipe(map(resp=>(this.crypto = resp)))
-        // .subscribe(_=>console.log(this.crypto))
-        }
+        .subscribe({next: resp => {this.crypto = resp;  console.log(resp);
+                                  this.errorMessage=null},
+                                  error:_=> this.errorMessage=`We couldn't find a company associated with ${this.badSearch}.  Use the search function below to help locate what you're after` ,
+                                  complete:()=> this.sortForm.reset()})}
     } 
     
   addCrypto(name:string, symbol:string, uuid:string){
@@ -114,6 +123,6 @@ searchForm!:FormGroup;
 
      
   
-  //  }
+  //  }   <p *ngIf="!commodity">If you don't know the symbol use the search function below</p>
 
 }

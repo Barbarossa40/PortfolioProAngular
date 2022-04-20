@@ -39,7 +39,8 @@ import { AuthGuard } from '../shared/guards/auth.guard';
       },
     {
     path: 'add-commodity',
-    component: AddCommodityComponent
+    component: AddCommodityComponent,
+    resolve:{resolvedCommodity: CommodityResolver}
     },
     {
     path: 'portfolio-add',

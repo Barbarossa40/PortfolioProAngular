@@ -11,7 +11,7 @@ import { AuthResponseDto } from '../shared/interfaces/auth-interfaces/login-mode
 })
 export class MenuComponent implements OnInit {
   
-  currentUser?:AuthResponseDto;
+  currentUser?:AuthResponseDto | null;
   userName:any;
   isUserAuthenticated:boolean =false
 
@@ -22,21 +22,22 @@ export class MenuComponent implements OnInit {
   imageProfile ='/assets/images/profile3.png'
 
   constructor(private _authService: AuthService, private _router: Router) { 
-    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
-    
   }
 
   ngOnInit(): void {
+    this._authService.currentUser.subscribe(resp => {this.currentUser = resp
+                                          if(this.currentUser?.isAuthenticated){
+                                             this.userName=this.currentUser?.email
+                                             .substring(0, this.currentUser?.email.lastIndexOf("@"))};
+                                              });
 
-
-    if(this.currentUser?.isAuthenticated){
-    this.userName=this.currentUser?.email.substring(0, this.currentUser?.email.lastIndexOf("@"))
-    }
+ 
 
   }
 
   public logout = () => {
     this._authService.logout();
+    console.log(this.currentUser)
     this._router.navigateByUrl('/home');
   }
 
