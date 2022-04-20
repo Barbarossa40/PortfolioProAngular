@@ -25,7 +25,7 @@ export class UserService {
   
  
   eventEmitterNotifier: EventEmitter<null> = new EventEmitter();
-  currentUser!:AuthResponseDto;
+  currentUser!:AuthResponseDto | null;
 
   constructor(private http: HttpClient, _authService:AuthService) {  
     _authService.currentUser.subscribe(resp => this.currentUser = resp);
@@ -53,6 +53,12 @@ export class UserService {
   { 
     return this.http.post<UserChange>(`${this.apiUriChange}`, change)
     
+  }
+
+  putChange()
+  {
+    this.http.put<UserChange>('https://jsonplaceholder.typicode.com/posts/1', body, { headers })
+  .subscribe(data => this.postId = data.id);
   }
 
 
