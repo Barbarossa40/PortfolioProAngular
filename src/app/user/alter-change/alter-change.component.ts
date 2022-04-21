@@ -1,4 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
+import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +9,7 @@ import { CommodityService } from 'src/app/commodity/commodity.service';
 import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login-models/auth-response-dto';
 import { UserChange } from 'src/app/shared/interfaces/user-interfaces/user-change';
 import { UserChangesResolved } from 'src/app/shared/interfaces/user-interfaces/user-changes-resolverd';
+import { textChangeRangeIsUnchanged } from 'typescript';
 import { UserService } from '../user.service';
 
 
@@ -24,6 +27,7 @@ export class AlterChangeComponent implements OnInit {
   cId!:number | null;
   change!:UserChange |null;
   editForm!:FormGroup;
+  errorMessage!: string|null;
   
 
   constructor(private _authService:AuthService, private _userService:UserService, private route:ActivatedRoute,private _router:Router,
@@ -36,17 +40,16 @@ export class AlterChangeComponent implements OnInit {
  
     this.route.paramMap.subscribe( param=>{this.cId = +param.get('cid')!})
     
-    if(!this.cId){
+    
    this._userService.getChangeById(this.cId!)
                       .subscribe(resp=> {this.change = resp;
                                         this.setValues(this.change)})
-    }
-    else{  this._userService.getChangeById(this.cId!)
-    }
-   
+                      
+
+ 
    this.editForm=this.formBuilder.group({
     transNumber:['', [Validators.required]],
-    timeStamp:['', [Validators.required]],
+    timeStamp:[Date, [Validators.required]],
     editTotal:['', [Validators.required]],
     netChange:['', [Validators.required]],
     commodityId:['', [Validators.required]]})
@@ -54,25 +57,30 @@ export class AlterChangeComponent implements OnInit {
       }
 
       private setValues(change: UserChange){
+      
        
-    
         this.editForm.get('transNumber')?.setValue(change?.changeId)
         this.editForm.get('timeStamp')?.setValue(change?.changeTime)
         this.editForm.get('editTotal')?.setValue(change?.totalAmount)
         this.editForm.get('netChange')?.setValue(change?.changeAmount)
         this.editForm.get('commodityId')?.setValue(change?.commodityId)
-       
-
-        // setValue({transNumber:change?.changeId,
-        //                           timeStamp: change?.changeTime,
-        //                           editTotal: change?.totalAmount,
-        //                           netChange: change?.changeAmount,
-        //                           commodityId: change?.commodityId,})
-        //                           console.log(change)
       }
 
       submitUpdate(editFormValues:any){
+        const edit = {... editFormValues };
+        const editChange: UserChange = {
+          changeId: edit.transNumber,
+          changeTime: edit.timeStamp,
+          changeAmount: edit.netChange,
+          totalAmount: edit.editTotal,
+          commodityId: edit.commodityId,
+          commodity: null,
+          userId!: this.currentUser?.id!}
 
+          this._userService.putChange(editChange).subscribe({next:resp => this.editForm.reset(),
+            error:() => this.errorMessage=" unknown error",
+            complete:()=>  window.location.reload()})
+          
       }
 
       

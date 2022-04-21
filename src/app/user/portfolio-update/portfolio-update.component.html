@@ -1,9 +1,10 @@
 
-    <h2>Last Transaction for {{mostRecent.commodity?.commodityName}}: {{mostRecent.commodity?.stockSymbol}}</h2>
+    <h2>Transactions for {{mostRecent.commodity?.commodityName}} ({{mostRecent.commodity?.stockSymbol}})</h2>
     <hr>
     <h4>Account Owner:  {{userName}}</h4>
     <div  *ngIf="coinPrice">
-        <table class="pricing"> 
+        <table class="pricing" id="userOwned"> 
+            <caption>Current Value</caption>
             <thead>
             <th>Shares Owned</th>    
             <th>Current Price</th>
@@ -20,9 +21,13 @@
     </tbody>
     </table>
 </div>
+<div>
+</div>
     <div *ngIf="quoteDetail">
         <table class="pricing">
+            <caption>Current Value</caption>
         <thead>
+        <th>Shares Owned</th>  
         <th>Value Per Share</th>
         <th>Time Stamp</th>
         <th>%Change</th>
@@ -30,7 +35,8 @@
         <th> Current Value of Holdings</th>
         </thead>
         <tbody>
-        <tr  *ngFor="let detail of quoteDetail; let i = index"> 
+        <tr  *ngFor="let detail of quoteDetail; let i = index">
+            <td>{{mostRecent.totalAmount}}</td> 
             <td>{{detail?.attributes?.last | currency}}</td>
             <td>{{detail?.attributes?.dateTime | date}}</td>
             <td *ngIf="detail?.attributes.percentChange > 0" class="positive">{{detail.attributes.percentChange | number:'1.0-2'}}</td>
@@ -41,13 +47,29 @@
     </tr>
 </tbody>
 </table>
+<br>
+<br>
+<br>
+<hr>
     </div>   
- <div>       
-    <ul>
-    <li> Transaction#:{{mostRecent.changeId}}</li>
-    <li> Date of Change{{mostRecent.changeTime}}</li>
-    <li> Previous Total:{{mostRecent.totalAmount - mostRecent.changeAmount}}</li>
-    <li> Asset Class: {{mostRecent.commodity?.type}}</li>
+ <div>    
+    <table class="pricing">
+        <caption>Most Recent Transaction</caption>
+         <thead>
+             <th>Transaction#</th>
+             <th>Date of Change</th>
+             <th>Previous Total</th>
+             <th>Asset Class</th>
+         </thead>
+    <tbody>
+     <tr>  
+     <td>{{mostRecent.changeId}}</td>
+     <td>{{mostRecent.changeTime}}</td>
+     <td>{{mostRecent.totalAmount - mostRecent.changeAmount}}</td>
+     <td>{{mostRecent.commodity?.type}}</td>
+    </tr>
+    </tbody>
+</table>
         <div class="row mb-2">
             <div class="col-md-4">
                 <br>
@@ -58,15 +80,18 @@
                     routerLinkActive="active">Edit</a></button>
               <button class="btn btn-outline-warning"
                       style="width:80px"
-                      type="button"
-                    (click)='onClick()'>New</button>
+                      type="button">
+                      <a class="navbar-brand" [routerLink]="['/portfolio-add',{symbol: mostRecent.commodity!.stockSymbol, uuid: mostRecent.commodity!.uuid}]" routerLinkActive="active" 
+                      [routerLinkActiveOptions]="{exact: true}">Add</a>
+                    </button>
             <button class="btn btn-outline-warning"
                     style="width:80px"
                     type="button"
-                  (click)='onClick()'>Delete</button>
+                    (click)="deleteInput(mostRecent.changeId!)">Delete</button>
             </div>
           </div>
-        </ul>  
+          
+      
     <br>
 </div> 
 <br>

@@ -7,11 +7,7 @@
           <label class="col-md-2 col-form-label"
                  for="transNumber">Transaction#</label>
           <div class="col-md-8">
-            <input class="form-control"
-                   id="transNumber"
-                   type="number"
-                   minlength="1"
-                   formControlName="transNumber" />
+           {{cId}}
           </div>
         </div>
         <!-- <input type="text" id="lastName" formControlName="lastName" class="form-control" /> -->
@@ -54,9 +50,15 @@
                 type="number"
                 formControlName="commodityId"/>
             </div>
+            <br>
           </div>
+          <button class="btn btn-outline-warning"
+          style="width:80px"
+          type="button"
+        (click)='submitUpdate(this.editForm.value)'>Submit</button>
       </fieldset>
     </form>
+    
   </div>
 
          <!-- changeId: number | undefined;

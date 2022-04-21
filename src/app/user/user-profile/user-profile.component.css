@@ -1,12 +1,34 @@
 h2.title {
     text-align: center;
+    font-size: xx-large;
+}
+
+caption{
+   
+    font-size: x-large;
 }
 
 table.pricing {
-    /* text-align: center; */
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
+    width:80%
 }
+
+
+td,th{
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+tr:nth-child(even){background-color: #f2f2f2;}
+th {
+    padding-top: 3px;
+    padding-bottom: 13px;
+    text-align: left;
+    background-color: #2871b4;
+    color: white;}
+
 
 td.positive {
     background-color: rgb(119, 209, 119);

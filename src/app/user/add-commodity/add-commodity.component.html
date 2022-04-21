@@ -18,8 +18,10 @@
         </div>
     </div>
 </form>
-<div>{{errorMessage}}</div>
-<div *ngIf="isStockSearch">
+<div *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
+<div *ngIf="isStockSearch &&  !errorMessage">
 <ul>
     <li>Company: {{commodity.commodityName}}</li>
     <li>Ticker: {{commodity.stockSymbol}}</li>
@@ -33,11 +35,11 @@
     Click if correct
   </button>   
 </div>
-<div *ngIf="isCryptoSearch">
+<div *ngIf="isCryptoSearch && !errorMessage">
     <ul>
         <li *ngFor='let coin of crypto; let i=index'>
             {{i+1}} - {{coin.name}} | {{coin.symbol}} | {{coin.price}} 
-            <button  type="submit" class="btn btn-primary"(click)="addCrypto(coin.name, coin.symbol, coin.uuid)" >click to add to Watched</button>
+            <button  type="submit" class="btn btn-primary"(click)="addCrypto(coin.name, coin.symbol, coin.uuid)" >Add</button>
         </li>
     </ul>
 </div>
@@ -52,6 +54,7 @@
     [routerLinkActiveOptions]="{exact: true}">No</a>
 </button>
 </div>
+
 
 
 

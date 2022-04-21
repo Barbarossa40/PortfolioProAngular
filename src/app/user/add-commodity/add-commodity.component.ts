@@ -18,8 +18,7 @@ import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login
 })
 export class AddCommodityComponent implements OnInit {
  
-  
-  sortForm!:FormGroup;
+ sortForm!:FormGroup;
  submitted = false;
  isCryptoSearch = false;
  isStockSearch = false;
@@ -28,7 +27,7 @@ export class AddCommodityComponent implements OnInit {
  currentUser?: AuthResponseDto | null
 
 
- commodity!:UserCommodity;
+ commodity!:UserCommodity ;
  message:any ='';
  stockDetail!: StockDetails
  crypto!:Coins[]
@@ -47,7 +46,7 @@ export class AddCommodityComponent implements OnInit {
 
   ngOnInit(): void { 
    
-    this.sortForm = new FormGroup({
+     this.sortForm = new FormGroup({
       tickerSymbol: new FormControl("", [Validators.required, Validators.minLength(1), Validators.maxLength(6)]),
       assetClass: new FormControl("", [Validators.required])
     })
@@ -103,9 +102,16 @@ export class AddCommodityComponent implements OnInit {
    this.commodity.uuid= uuid
 
     this._commodityService.addAsset(this.commodity)
-    .subscribe(_ => this.doAddToPortfolio = true) }
+    .subscribe({next: resp => {this.doAddToPortfolio = true;
+                              this.errorMessage=null},
+                 error: err=>this.errorMessage= `We already track ${this.commodity.commodityName}: ${this.commodity.stockSymbol}. Please check again! `})
+  
+  }
 
   addStock(){
     this._commodityService.addAsset(this.commodity)
-    .subscribe(_ => this.doAddToPortfolio = true)}
+    .subscribe({next: resp => {this.doAddToPortfolio = true,
+                               this.errorMessage=''},
+      error: err=>this.errorMessage= `We already track ${this.commodity.commodityName}: ${this.commodity.stockSymbol}. Please check again! `})
+    }
 }

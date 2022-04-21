@@ -15,6 +15,7 @@ import { AuthGuard } from '../shared/guards/auth.guard';
 import { AlterChangeComponent } from './alter-change/alter-change.component';
 
 
+
 @NgModule({
   declarations: [
     UserProfileComponent,
@@ -37,10 +38,11 @@ import { AlterChangeComponent } from './alter-change/alter-change.component';
     {
       path: 'user-profile/:id/update/:uid',  
       component: PortfolioUpdateComponent,
-      resolve:{resolvedChanges: ChangesResolver},
+      resolve:{resolvedChanges: ChangesResolver,},
       children: [
         {path: '', redirectTo: 'update', pathMatch: 'full' },
-        {path:'alter/:cid', component: AlterChangeComponent} 
+        {path:'alter/:cid', component: AlterChangeComponent
+       },
         ]
       },
     {

@@ -62,15 +62,14 @@ export class UserService {
 
   putChange(change: UserChange)
   {
-    this.http.put<UserChange>(`${this.apiUriUser}`, change)
-  .subscribe()
+    return this.http.put<UserChange>(`${this.apiUriUser}`, change)
+  
   }
 
   deleteChange(cId: number, id:string)
   {
-    this.http.delete(`${this.apiUriUser}?cId=${cId}&id=${id}`)
-    .subscribe()
-
+    return this.http.delete(`${this.apiUriUser}?cId=${cId}&id=${id}`)
+    
 
   }
 

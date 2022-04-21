@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   commodities: UserChange[] =[];
   currentUser: AuthResponseDto | null = new AuthResponseDto;
   message:string=''
+  today=new Date();
   
 
   constructor(public _authService :AuthService, private _userService:UserService, private _router:Router ) { }

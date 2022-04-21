@@ -117,5 +117,13 @@ export class PortfolioUpdateComponent implements OnInit {
                 complete:()=> this.updateForm.reset()
                     })
   }
+
+  deleteInput(changeId:number){
+    this._userService.deleteChange(changeId,this.currentUser?.id!).subscribe({next:resp =>{this._userService.notifyAboutChange();}, 
+                                                 error: err=> this.errorMessage="falied to post change. Please, try again",
+                                                 complete:()=> window.location.reload()})
+  }
+
 }
+
 // this._router.navigate(['/user-profile'])

@@ -13,6 +13,8 @@ export class CommodityListingComponent implements OnInit {
     + "%2cnke%2cpg"
     
   quoteDetails: any;
+  crypto: any;
+  today=new Date();
 
   constructor(private repo : CommodityService) { } 
 
@@ -20,6 +22,9 @@ export class CommodityListingComponent implements OnInit {
     this.repo.getStockQuote(this.symbol).subscribe(
       (response) => {this.quoteDetails = response}
     );
+
+    this.repo.getFiftyCoins().subscribe( resp=>
+      this.crypto= resp)
   
 
   }
