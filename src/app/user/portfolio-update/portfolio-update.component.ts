@@ -112,7 +112,7 @@ export class PortfolioUpdateComponent implements OnInit {
   }
   
   this._userService.postChange(change)
-    .subscribe({next:resp =>{this._userService.notifyAboutChange(); }, 
+    .subscribe({next:resp =>{this._userService.notifyAboutChange();  this._router.navigate(['/user-profile'])}, 
                 error: err=> this.errorMessage="falied to post change. Please, try again",
                 complete:()=> this.updateForm.reset()
                     })

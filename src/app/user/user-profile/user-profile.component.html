@@ -1,12 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div>
-    <ul>
-      <li><a class="navbar-brand" routerLink="/add-commodity">Add Commodity</a></li>
-      <li> <a class="navbar-brand"routerLink="/portfolio-add">Add To Portfolio</a></li>
-    </ul>
+<div class="row mb-2">
+  <div class="col-md-4">
+      <br>
+    <button class="btn btn-primary mr-3"
+            style="width:250px"
+            type="button" >
+            <a class="navbar-brand" routerLink="/add-commodity">Add Asset To Watched</a></button>
+            <button class="btn btn-primary mr-3"
+            style="width:250px"
+            type="button" >
+            <a class="navbar-brand"routerLink="/portfolio-add">Add New Asset To Your Portfolio</a></button>
   </div>
-</nav>
-
+</div>
 
 <h2>Hello {{userName}}</h2>
 
@@ -21,17 +25,17 @@
         <th> Ref#</th>
         <th> Name</th>
         <th> Symbol</th>
-        <th> type</th>
+        <th> Type</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let commodity of commodities">
         <td> {{commodity.changeId}}</td>
-        <td>{{commodity.changeTime}}</td>
+        <td>{{commodity.changeTime | date}} </td>
         <td> {{commodity.totalAmount - commodity.changeAmount }}</td>
         <td>{{commodity.totalAmount}}</td>
         <td>{{commodity.commodityId}}</td>   
-        <td>{{commodity.commodity?.commodityName}}</td>    
+        <td class="text-align: start;">{{commodity.commodity?.commodityName}}</td>    
         <td>{{commodity.commodity?.stockSymbol}}</td>    
         <td>{{commodity.commodity?.type}}</td>
         <br>

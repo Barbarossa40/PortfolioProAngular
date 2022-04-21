@@ -56,15 +56,24 @@ export class AlterChangeComponent implements OnInit {
       private setValues(change: UserChange){
        
     
-        this.editForm.setValue({transNumber:change?.changeId,
-                                  timeStamp: change?.changeTime,
-                                  editTotal: change?.totalAmount,
-                                  netChange: change?.changeAmount,
-                                  commodityId: change?.commodityId,})
-                                  console.log(change)
+        this.editForm.get('transNumber')?.setValue(change?.changeId)
+        this.editForm.get('timeStamp')?.setValue(change?.changeTime)
+        this.editForm.get('editTotal')?.setValue(change?.totalAmount)
+        this.editForm.get('netChange')?.setValue(change?.changeAmount)
+        this.editForm.get('commodityId')?.setValue(change?.commodityId)
+       
+
+        // setValue({transNumber:change?.changeId,
+        //                           timeStamp: change?.changeTime,
+        //                           editTotal: change?.totalAmount,
+        //                           netChange: change?.changeAmount,
+        //                           commodityId: change?.commodityId,})
+        //                           console.log(change)
       }
 
       submitUpdate(editFormValues:any){
 
       }
+
+      
 }

@@ -60,6 +60,10 @@
                       style="width:80px"
                       type="button"
                     (click)='onClick()'>New</button>
+            <button class="btn btn-outline-warning"
+                    style="width:80px"
+                    type="button"
+                  (click)='onClick()'>Delete</button>
             </div>
           </div>
         </ul>  
@@ -84,54 +88,7 @@
         </div>
     </form>
 </div>
-
-<div class="card-body">
-<div class="wizard">
-<a [routerLink]="['update']"
-  routerLinkActive="active">
- {{mostRecent.commodity!.commodityName}} Change/Delete:
-</a>
-<a [routerLink]="['update']"
-  routerLinkActive="active">
- {{mostRecent.commodity!.commodityName}} Details:
-</a>
-
-<!-- <a [routerLink]="['tags']"
-  routerLinkActive="active">
- Search Tags<span [ngClass]="{'fa fa-exclamation': !isValid('tags')}"></span>
-</a>
-</div>     
-<div class="container"> -->
     <router-outlet></router-outlet>
-</div>
-
-<div class="row mb-2">
-    <div class="col-md-4">
-      <button class="btn btn-primary mr-3"
-              style="width:80px"
-              type="button"
-              title="Save your changes"
-              [disabled]=""
-              >
-        Save
-      </button>
-      <button class="btn btn-outline-secondary mr-3"
-              style="width:80px"
-              type="button"
-              title="Cancel your edits"
-              [routerLink]="['user-profile']">
-        Cancel
-      </button>
-      <button class="btn btn-outline-warning"
-              style="width:80px"
-              type="button"
-              title="Delete this transaction"
-             >
-        Delete
-      </button>
-    </div>
-  </div>
-
 <div>
     <h2>Previous Transactions</h2>
     <hr>
