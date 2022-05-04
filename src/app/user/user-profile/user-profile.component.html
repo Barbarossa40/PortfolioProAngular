@@ -5,7 +5,7 @@
     <button class="btn btn-primary mr-3"
             style="width:250px"
             type="button" >
-            <a class="navbar-brand" routerLink="/add-commodity">Add Asset To Watched</a></button>
+            <a class="navbar-brand" routerLink="/add-asset">Add Asset To Watched</a></button>
             <button class="btn btn-primary mr-3"
             style="width:250px"
             type="button" >
@@ -20,31 +20,33 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Last Changed</th>
+        <th>Last Transactiond</th>
         <th>Previous Total</th>
         <th> Current Total </th>
         <th> Ref#</th>
         <th> Name</th>
         <th> Symbol</th>
         <th> Type</th>
+        <th> Avg Price</th>
       
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let commodity of commodities">
-        <td> {{commodity.changeId}}</td>
-        <td>{{commodity.changeTime | date}} </td>
-        <td> {{commodity.totalAmount - commodity.changeAmount }}</td>
-        <td>{{commodity.totalAmount}}</td>
-        <td>{{commodity.commodityId}}</td>   
-        <td class="text-align: start;">{{commodity.commodity?.commodityName}}</td>    
-        <td>{{commodity.commodity?.stockSymbol}}</td>    
-        <td>{{commodity.commodity?.type}}</td>
+      <tr *ngFor="let asset of assets; let i=index">
+        <td> {{asset.transactionId}}</td>
+        <td>{{asset.transactionTime | date}} </td>
+        <td> {{asset.totalAmount - asset.transactionAmount }}</td>
+        <td>{{asset.totalAmount}}</td>
+        <td>{{asset.assetId}}</td>   
+        <td class="text-align: start;">{{asset.asset?.assetName}}</td>    
+        <td>{{asset.asset?.stockSymbol}}</td>    
+        <td>{{asset.asset?.type}}</td>
+        <td>{{average[i]}}</td>
         <br>
-        <td><button><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'details']" routerLinkActive="active" 
+        <td><button><a class="navbar-brand" [routerLink]="['/user-profile', asset.assetId,'details']" routerLinkActive="active" 
           [routerLinkActiveOptions]="{exact: true}">Details</a></button>
           <br></td>
-          <td><button><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'update',currentUser!.id]" routerLinkActive="active" 
+          <td><button><a class="navbar-brand" [routerLink]="['/user-profile', asset.assetId,'update',currentUser!.id]" routerLinkActive="active" 
           [routerLinkActiveOptions]="{exact: true}">Update</a></button>
           <br></td>
       </tr>

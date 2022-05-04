@@ -48,8 +48,8 @@ export class AuthService {
 
   }
 
-  // public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
-  //   this._authChangeSub.next(isAuthenticated);
+  // public sendAuthStateTransactionNotification = (isAuthenticated: boolean) => {
+  //   this._authTransactionSub.next(isAuthenticated);
   // }
 
   // public isUserAuthenticated = (): boolean => {

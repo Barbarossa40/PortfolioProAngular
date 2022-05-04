@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { CommodityModule } from './commodity/commodity.module';
+import { AssetModule } from './asset/asset.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -37,7 +37,7 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     UserModule,
     CoreModule,
-    CommodityModule,
+    AssetModule,
     JwtModule.forRoot({
       config: {
         allowedDomains: ["localhost:4200"],

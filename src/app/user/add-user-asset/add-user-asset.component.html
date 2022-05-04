@@ -1,11 +1,11 @@
 
-<div *ngIf="commodity">
-<h1> {{commodity.commodityName}} </h1>
-<p>{{commodity.stockSymbol}}</p>
-<p>{{commodity.type}}</p>
+<div *ngIf="asset">
+<h1> {{asset.assetName}} </h1>
+<p>{{asset.stockSymbol}}</p>
+<p>{{asset.type}}</p>
 
 </div>
-<div *ngIf="!commodity"> 
+<div *ngIf="!asset"> 
     <form [formGroup]="tickerForm" autocomplete="off" novalidate (ngSubmit)="tickerSubmit(tickerForm.value)">
         <div class="form-group row">
             <label for="ticker" class="col-form-label col-sm-2">Ticker/Symbol</label>
@@ -24,18 +24,19 @@
 <div *ngIf="showMatch">
     <h1> Do any of these match what you are looking for?</h1>
     <ul> 
-        <li *ngFor='let commodity of userCommodity; let i=index'>
-            {{i+1}} - {{commodity.commodityName}} | {{commodity.stockSymbol}} | {{commodity.type}} 
-            <button  type="submit" class="btn btn-primary"(click)="addPortfolio(commodity.commodityId);showMatch=false" >add to portfolio</button>
+        <li *ngFor='let asset of userAsset; let i=index'>
+            {{i+1}} - {{asset.assetName}} | {{asset.stockSymbol}} | {{asset.type}} 
+            <button  type="submit" class="btn btn-primary"(click)="addPortfolio(asset.assetId);showMatch=false" >add to portfolio</button>
         </li>
     </ul>
     <p>If not click here to add it to our database</p>
-        <a class="navbar-brand" [routerLink]="['/add-commodity']" routerLinkActive="active" 
+        <a class="navbar-brand" [routerLink]="['/add-asset']" routerLinkActive="active" 
         [routerLinkActiveOptions]="{exact: true}">No</a>
     
 </div>
-    <div *ngIf="commodity"> 
-        <form [formGroup]="changeForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(changeForm.value)">
+    <div *ngIf="asset"> 
+        <p *ngIf="transaction!.priceSnapshot !=-1">{{transaction!.priceSnapshot |currency}}</p>
+        <form [formGroup]="transactionForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(transactionForm.value)">
             <div class="form-group row">
                 <label for="newTotal" class="col-form-label col-sm-2">New Total:</label>
                 <div class="col-md-5">
@@ -45,7 +46,7 @@
             <br>
             <div class="form-group row">
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-info" [disabled]="!changeForm.valid">Update</button>
+                    <button type="submit" class="btn btn-info" [disabled]="!transactionForm.valid">Update</button>
                 </div>
             </div>
         </form>

@@ -1,0 +1,82 @@
+<div class="card-body">
+    <form [formGroup]="editForm" autocomplete="off" novalidate (ngSubmit)="submitUpdate(editForm.value)">
+      <fieldset>
+        <legend>Transactions</legend>
+  
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="transNumber">Transaction#</label>
+          <div class="col-md-8">
+           {{tId}}
+          </div>
+        </div>
+        <!-- <input type="text" id="lastName" formControlName="lastName" class="form-control" /> -->
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="timeStamp">Time Stamp</label>
+          <div class="col-md-8">
+            <input class="form-control"
+            id="timeStamp"
+            type="datetime"
+            formControlName="timeStamp" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="editTotal"> New Total</label>
+          <div class="col-md-8">
+            <input class="form-control"
+            id="editTotal"
+            type="number"
+            formControlName="editTotal" />
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="netTransaction">Net Transaction(+/-)</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                id="netTransaction"
+                type="number"
+                formControlName="netTransaction" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="assetId">Asset Id#</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                id="assetId"
+                type="number"
+                formControlName="assetId"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="priceSnapshot">Price Snapshot</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                id="priceSnapshot"
+                type="number"
+                formControlName="priceSnapshot"/>
+            </div>
+          </div>
+          <br> 
+          <button class="btn btn-outline-warning"
+          style="width:80px"
+          type="button"
+        (click)='submitUpdate(this.editForm.value)'>Submit</button>
+      </fieldset>
+    </form>
+    
+  </div>
+
+         <!-- transactionId: number | undefined;
+        transactionTime: Date;
+        transactionAmount: number;
+        totalAmount: number;
+        assetId: number;
+        asset: Nullable<UserAsset>;
+        userId: string;
+     -->
+    

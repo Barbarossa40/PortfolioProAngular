@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CommodityListingComponent } from './commodity/commodity-listing/commodity-listing.component';
-import { SearchStockComponent } from './commodity/search-stock/search-stock.component';
+import { AssetListingComponent } from './asset/asset-listing/asset-listing.component';
+import { SearchStockComponent } from './asset/search-stock/search-stock.component';
 import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { AddCommodityComponent } from './user/add-commodity/add-commodity.component';
+import { AddAssetComponent } from './user/add-asset/add-asset.component';
 import { AddUserAssetComponent } from './user/add-user-asset/add-user-asset.component';
 import { UserModule } from './user/user.module';
 
@@ -28,8 +28,8 @@ const routes: Routes = [
     component:SearchStockComponent
   },
   {
-    path: 'commodity',
-    component:CommodityListingComponent
+    path: 'asset',
+    component:AssetListingComponent
   },
   { 
     path: 'auth', 

@@ -1,13 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserChange } from '../shared/interfaces/user-interfaces/user-change';
+import { UserTransaction } from '../shared/interfaces/user-interfaces/user-transaction';
 import { BehaviorSubject, map, observable, Subject, switchMap, tap } from 'rxjs';
-import { Coins } from '../shared/interfaces/commodity-interfaces/coins';
-import { ChangeDto } from '../shared/interfaces/user-interfaces/change-dto';
 import { AuthService } from '../auth/auth.service';
 import { AuthDto } from '../shared/interfaces/auth-interfaces/login-models/auth-dto';
 import { AuthResponseDto } from '../shared/interfaces/auth-interfaces/login-models/auth-response-dto';
-
+import { Coins } from '../shared/interfaces/asset-interfaces/coins';
+import { TransactionDto } from '../shared/interfaces/user-interfaces/transaction-dto';
 
 
 @Injectable({
@@ -15,8 +14,8 @@ import { AuthResponseDto } from '../shared/interfaces/auth-interfaces/login-mode
 })
 export class UserService {
 
-  private apiUriCommodity : string ="https://localhost:7168/api/commodity";
-  private apiUriChange : string ="https://localhost:7168/api/user";
+  private apiUriAsset : string ="https://localhost:7168/api/asset";
+  private apiUriTransaction : string ="https://localhost:7168/api/user";
   private apiUriCoin : string ="https://localhost:7168/api/coin";
   private apiUriQuote : string ="https://localhost:7168/api/quote";
   private apiUriSearch : string ="https://localhost:7168/api/search";
@@ -35,55 +34,58 @@ export class UserService {
  
 
 
-  notifyAboutChange() {
+  notifyAboutTransaction() {
     this.eventEmitterNotifier.emit();
   }
    
-  getUserCommodities(id:any){
-    return this.http.get<UserChange[]>(`${this.apiUriUser}?id=${id}`)
+  getUserAssets(id:any){
+    return this.http.get<UserTransaction[]>(`${this.apiUriUser}?id=${id}`)
   }
   
-  getUserCommodityDetail(userid:string, commId?: number){
+  getUserAssetDetail(userid:string, assetId?: number){
 
-    return this.http.get<UserChange[]>(`${this.apiUriUser}/details?userid=${userid}&commid=${commId}`)
+    return this.http.get<UserTransaction[]>(`${this.apiUriUser}/details?userid=${userid}&assetId=${assetId}`)
                     
   }
-  getChangeById(cId: number){
+  getTransactionById(tId: number){
 
-    return this.http.get<UserChange>(`${this.apiUriUser}/change-id?cId=${cId}`)
+    return this.http.get<UserTransaction>(`${this.apiUriUser}/transaction-id?tId=${tId}`)
                     
   }
  
-  postChange(change:ChangeDto)
+  postTransaction(transaction:TransactionDto)
   { 
-    return this.http.post<UserChange>(`${this.apiUriChange}`, change)
+    return this.http.post<UserTransaction>(`${this.apiUriTransaction}`, transaction)
   
   }
 
-  putChange(change: UserChange)
+  putTransaction(transaction: UserTransaction)
   {
-    return this.http.put<UserChange>(`${this.apiUriUser}`, change)
+    return this.http.put<UserTransaction>(`${this.apiUriUser}`, transaction)
   
   }
 
-  deleteChange(cId: number, id:string)
+  deleteTransaction(tId: number, id:string)
   {
-    return this.http.delete(`${this.apiUriUser}?cId=${cId}&id=${id}`)
+    return this.http.delete(`${this.apiUriUser}?tId=${tId}&id=${id}`)
     
+  }
 
+  getAverage(id:string){
+    return this.http.get<number[]>(`${this.apiUriUser}/average?id=${id}`)
   }
 
 }
 
 
-// .pipe(tap(_=> this.hasChanged.next(null)))
+// .pipe(tap(_=> this.hasTransactiond.next(null)))
   // userAssetSearch(ticker:string){
   //   return this.http.get<any>(`${this.apiUriSymbol}?symbol=${ticker}`,{observe:'body'})  
   // }
 
-  // addAsset(newCommodity:UserCommodity){
-  //   delete newCommodity.commodityId;
-  //   return this.http.post<any>(this.apiUriCommodity,newCommodity, {observe:'body'});    
+  // addAsset(newAsset:UserAsset){
+  //   delete newAsset.assetId;
+  //   return this.http.post<any>(this.apiUriAsset,newAsset, {observe:'body'});    
   // }
 
   // userCryptoSearch(query:string){

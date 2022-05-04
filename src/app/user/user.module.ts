@@ -4,57 +4,60 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUserAssetComponent } from './add-user-asset/add-user-asset.component';
-import { CommodityModule } from '../commodity/commodity.module';
-import { AddCommodityComponent } from './add-commodity/add-commodity.component';
-import { UserCommodityDetails } from './user-commodity-details/user-commodity-details.component';
+import { AssetModule } from '../asset/asset.module';
+import { AddAssetComponent } from './add-asset/add-asset.component';
+import { UserAssetDetails } from './user-asset-details/user-asset-details.component';
 import { PortfolioUpdateComponent } from './portfolio-update/portfolio-update.component';
-import { CommodityResolver } from './commodity-resolver.service';
+import { AssetResolver } from './asset-resolver.service';
 
-import { ChangesResolver } from './changes-resolver.service';
+import { TransactionsResolver } from './transactions-resolver.service';
 import { AuthGuard } from '../shared/guards/auth.guard';
-import { AlterChangeComponent } from './alter-change/alter-change.component';
+import { AlterTransactionComponent } from './alter-transaction/alter-transaction.component';
+import { UserAddTransactionComponent } from './user-add-transaction/user-add-transaction.component';
+
 
 
 
 @NgModule({
   declarations: [
     UserProfileComponent,
-    AddCommodityComponent,
+    AddAssetComponent,
     AddUserAssetComponent,
-    UserCommodityDetails,
+    UserAssetDetails,
     PortfolioUpdateComponent,
-    AlterChangeComponent,
+    AlterTransactionComponent,
+    UserAddTransactionComponent,
   ],
   imports: [
 
     CommonModule,
-    CommodityModule,
+    AssetModule,
     RouterModule.forChild([
     {
     path: 'user-profile/:id/details',
-     component: UserCommodityDetails,
-     resolve:{resolvedCommodity: CommodityResolver}
+     component: UserAssetDetails,
+     resolve:{resolvedAsset: AssetResolver}
     },
     {
       path: 'user-profile/:id/update/:uid',  
       component: PortfolioUpdateComponent,
-      resolve:{resolvedChanges: ChangesResolver,},
+      resolve:{resolvedTransactions: TransactionsResolver,},
       children: [
         {path: '', redirectTo: 'update', pathMatch: 'full' },
-        {path:'alter/:cid', component: AlterChangeComponent
-       },
+        {path:'add-transaction', component: UserAddTransactionComponent},
+        {path:'alter/:tid', component: AlterTransactionComponent},
         ]
       },
     {
-    path: 'add-commodity',
-    component: AddCommodityComponent,
-    resolve:{resolvedCommodity: CommodityResolver}
+    path: 'add-asset',
+    component: AddAssetComponent,
+    resolve:{resolvedAsset: AssetResolver}
     },
     {
     path: 'portfolio-add',
     component: AddUserAssetComponent,
-    resolve:{resolvedCommodity: CommodityResolver,
-             resolvedChanges: ChangesResolver}
+    resolve:{resolvedAsset: AssetResolver,
+             resolvedTransactions: TransactionsResolver}
     } 
     ]),
     FormsModule,

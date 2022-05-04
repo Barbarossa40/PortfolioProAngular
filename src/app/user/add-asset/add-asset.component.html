@@ -1,0 +1,62 @@
+<form [formGroup]="sortForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(sortForm.value)">
+    <div class="form-group row">
+        <label for="tickerSymbol" class="col-form-label col-sm-2">Ticker:</label>
+        <div class="col-md-5">
+            <input type="text" id="tickerSymbol" formControlName="tickerSymbol" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-5">
+            <input type="radio" value="Crypto" id="assetCrypto" formControlName="assetClass" class="form-control" /> Crypto
+            <input type="radio" value="Stock" id="assetStock" formControlName="assetClass" class="form-control" /> Stock
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-info" [disabled]="!sortForm.valid">Search</button>
+        </div>
+    </div>
+</form>
+<div *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
+<div *ngIf="isStockSearch &&  !errorMessage">
+<ul>
+    <li>Company: {{asset.assetName}}</li>
+    <li>Ticker: {{asset.stockSymbol}}</li>
+    <li>Asset Class: {{asset.type}}</li>
+
+</ul>
+    <button
+    type="submit"
+    class="btn btn-primary"
+    (click)="addStock()">
+    Click if correct
+  </button>   
+</div>
+<div *ngIf="isCryptoSearch && !errorMessage">
+    <ul>
+        <li *ngFor='let coin of crypto; let i=index'>
+            {{i+1}} - {{coin.name}} | {{coin.symbol}} | {{coin.price}} 
+            <button  type="submit" class="btn btn-primary"(click)="addCrypto(coin.name, coin.symbol, coin.uuid)" >Add</button>
+        </li>
+    </ul>
+</div>
+<div *ngIf="doAddToPortfolio">
+    <p>Would you like to also like to add this to your portfolio?</p>
+<button class="btn btn-primary">  
+    <a class="navbar-brand" [routerLink]="['/portfolio-add',{symbol: asset.stockSymbol, uuid: asset.uuid}]" routerLinkActive="active" 
+    [routerLinkActiveOptions]="{exact: true}">Yes</a>
+</button>
+<button class="btn btn-primary">  
+    <a class="navbar-brand" [routerLink]="['/user-profile']" routerLinkActive="active" 
+    [routerLinkActiveOptions]="{exact: true}">No</a>
+</button>
+</div>
+
+
+
+
+
+<app-search-stock> </app-search-stock>

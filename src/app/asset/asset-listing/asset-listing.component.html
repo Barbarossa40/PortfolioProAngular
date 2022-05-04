@@ -1,0 +1,52 @@
+<hr>
+
+<h2 class="title">Market Watch</h2>
+<br>
+<div class="container"> 
+<table class="pricing" id="stock"> 
+    <caption>Stock Market</caption> <caption style="font-size:large">{{today |date}}</caption>
+    <thead> 
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Open Price</th>
+        <th>Transaction(24hrs)</th>
+        <th>Transaction Percent</th>
+        <th> Year High</th>
+    </thead>
+<tr  *ngFor="let detail of quoteDetails; let i = index">
+        <td>{{detail?.id}}</td>
+        <td>{{detail?.attributes?.name}}</td>
+        <td>${{detail?.attributes?.last}}</td>
+        <td>${{detail?.attributes?.open}}</td>
+        <td *ngIf="detail?.attributes.transaction > 0" class="positive">{{detail.attributes.transaction | number:'1.0-2'}}%</td>
+        <td *ngIf="detail?.attributes.transaction < 0" class="negative">{{detail.attributes.transaction | number:'1.0-2'}}%</td>
+        <td *ngIf="detail?.attributes.percentTransaction > 0" class="positive">{{detail.attributes.percentTransaction | number:'1.0-2'}}%</td>
+        <td *ngIf="detail?.attributes.percentTransaction < 0" class="negative">{{detail.attributes.percentTransaction | number:'1.0-2'}}%</td>
+        <td>${{detail?.attributes?.high52Week}}</td>
+        <br>
+</tr>
+</table>
+<table class="pricing"
+id="crypto">
+<caption>Crypto Market</caption><caption style="font-size:large">{{today |date}}</caption>
+<thead> 
+        <th>Rank</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Market Cap</th>
+        <th>Price</th>
+        <th>Transaction Percent</th>
+    </thead>
+<tr  *ngFor="let coin of crypto; let i = index">
+        <td>{{coin.rank}} </td>
+        <td> {{coin.symbol}} </td>
+        <td> {{coin?.name}} </td>
+        <td> {{coin.marketCap | currency}} </td>
+        <td> {{coin.price | currency}} </td>
+        <td *ngIf="coin.transaction> 0" class="positive">{{coin.transaction | number:'1.0-2'}}%</td>
+        <td *ngIf="coin.transaction < 0" class="negative">{{coin.transaction | number:'1.0-2'}}%</td>
+        <br>
+</tr>
+</table>
+</div>

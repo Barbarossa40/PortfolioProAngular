@@ -5,8 +5,8 @@ import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
-import { UserChange } from '../../shared/interfaces/user-interfaces/user-change';
-import { CommodityService } from 'src/app/commodity/commodity.service';
+import { UserTransaction } from '../../shared/interfaces/user-interfaces/user-transaction';
+import { AssetService } from 'src/app/asset/asset.service';
 
 
 
@@ -17,10 +17,11 @@ import { CommodityService } from 'src/app/commodity/commodity.service';
 })
 export class UserProfileComponent implements OnInit {
   userName = '';
-  commodities: UserChange[] =[];
+  assets: UserTransaction[] =[];
   currentUser: AuthResponseDto | null = new AuthResponseDto;
   message:string=''
   today=new Date();
+  average!: number[];
   
 
   constructor(public _authService :AuthService, private _userService:UserService, private _router:Router ) { }
@@ -31,17 +32,22 @@ export class UserProfileComponent implements OnInit {
       this.message='not allowed, bye felicia'
       this._router.navigate(['auth/login'])
     }else{
-      this.getUserCommodities(this.currentUser.id)
+      this.getUserAssets(this.currentUser.id)
       this.userName=this.currentUser.email.substring(0, this.currentUser.email.lastIndexOf("@"))
     } 
 
+    this.getAverage(this.currentUser?.id)
 }
 
-private getUserCommodities(id:any){
+private getUserAssets(id:any){
 
-  this._userService.getUserCommodities(id)
-    .subscribe(stonks => this.commodities=stonks)
+  this._userService.getUserAssets(id)
+    .subscribe(stonks => this.assets=stonks)
 }
 
+private getAverage(id: any){
+this._userService.getAverage(id)
+      .subscribe( avg=> this.average= avg)
+}
 
 }
