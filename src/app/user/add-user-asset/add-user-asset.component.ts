@@ -56,7 +56,7 @@ export class AddUserAssetComponent implements OnInit {
      priceSnapshot: -1
      } 
      this._assetService.getStockQuote(this.asset!.stockSymbol)
-     .subscribe({next: resp=> this.transaction.priceSnapshot = resp.last})    
+     .subscribe({next: resp=> this.transaction.priceSnapshot= resp[0].attributes.last})    
      
 }
 

@@ -37,17 +37,21 @@ export class UserProfileComponent implements OnInit {
     } 
 
     this.getAverage(this.currentUser?.id)
+    console.log(this.average)
 }
 
 private getUserAssets(id:any){
 
   this._userService.getUserAssets(id)
-    .subscribe(stonks => this.assets=stonks)
+    .subscribe({next: stonks => this.assets=stonks,
+                complete:() => console.log(this.assets)})
 }
 
 private getAverage(id: any){
 this._userService.getAverage(id)
-      .subscribe( avg=> this.average= avg)
+      .subscribe({next: avg=> this.average= avg, 
+                 complete: () =>  console.log(this.average)})
+     
 }
 
 }

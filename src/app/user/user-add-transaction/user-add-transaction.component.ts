@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import { AssetService } from 'src/app/asset/asset.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserAsset } from 'src/app/shared/interfaces/asset-interfaces/user-asset';
@@ -20,7 +21,7 @@ export class UserAddTransactionComponent implements OnInit {
 
   
   lastTrans!:UserTransaction;
-  transArray!: UserTransaction[]
+  objPairArray!: Map<string, string>;
   currentUser!:AuthResponseDto|null;
   transactionForm!:FormGroup;
   transaction!: TransactionDto
@@ -51,10 +52,7 @@ export class UserAddTransactionComponent implements OnInit {
     
     this.transactionForm=this.formBuilder.group({
       newTotal: ['', [Validators.required]]})
-      console.log(this.lastTrans)
-      
-
-
+      console.log(this.lastTrans) 
 
         if(this.lastTrans?.asset?.uuid !== ''|| null){
            console.log(this.lastTrans?.asset?.uuid)
@@ -63,18 +61,12 @@ export class UserAddTransactionComponent implements OnInit {
         else{
           console.log(this.lastTrans?.asset?.stockSymbol)
           this._assetService.getStockQuote(this.lastTrans!.asset!.stockSymbol)
-          .subscribe({next: resp=> this.transaction.priceSnapshot = this.getPriceSnapshot(resp.attributes),
-                      complete: () => console.log(this.transaction)})
+          .subscribe({next: response => this.transaction.priceSnapshot= response[0].attributes.last})
         }
- 
-         
-  }
+      }
+       
 
-  getPriceSnapshot(resp:any){
-  
 
-    
-  }
 
     onSubmit(newTotalValue:any){
       const newTotal ={...newTotalValue} 
@@ -83,6 +75,12 @@ export class UserAddTransactionComponent implements OnInit {
       this.transaction.userId=this.currentUser!.id
       this.transaction.transactionAmount=(newTotal.newTotal-this.lastTrans.totalAmount!)
       
+      this._userService.postTransaction(this.transaction)
+                  .subscribe(resp =>{ this._userService.notifyAboutTransaction(); 
+                    this._router.navigate(['/user-profile'])})
+
   }
 
 }
+//.pipe(map( resp=> Object.entries(resp).map(([key,value])=>`${key}: ${value}` )))
+//       .subscribe(resp=> this.stockDetail=resp)}

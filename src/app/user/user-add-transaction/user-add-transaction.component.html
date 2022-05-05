@@ -1,6 +1,6 @@
 
  <div> 
-    <p *ngIf="transaction!.priceSnapshot">{{transaction!.priceSnapshot |currency}}</p>
+    <p *ngIf="transaction!.priceSnapshot && transaction!.priceSnapshot>0">Current Price: {{transaction!.priceSnapshot |currency}}</p>
     <form [formGroup]="transactionForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(transactionForm.value)">
         <div class="form-group row">
             <label for="newTotal" class="col-form-label col-sm-2">New Total:</label>
