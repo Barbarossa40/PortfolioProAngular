@@ -5,11 +5,13 @@
     <button class="btn btn-primary mr-3"
             style="width:250px"
             type="button" >
-            <a class="navbar-brand" routerLink="/add-asset">Add Asset To Watched</a></button>
+            <a class="navbar-brand" [routerLink]="['/add-asset']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Add Asset To Watched</a></button>
             <button class="btn btn-primary mr-3"
             style="width:250px"
             type="button" >
-            <a class="navbar-brand"routerLink="/portfolio-add">Add New Asset To Your Portfolio</a></button>
+            <a class="navbar-brand"[routerLink]="['/portfolio-add']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Add New Asset To Your Portfolio</a></button>
   </div>
 </div>
 <br>
@@ -41,12 +43,12 @@
         <td class="text-align: start;">{{asset.asset?.assetName}}</td>    
         <td>{{asset.asset?.stockSymbol}}</td>    
         <td>{{asset.asset?.type}}</td>
-        <td>{{average[i]}}</td>
+        <td>{{average[i] | currency}}</td>
         <br>
-        <td><button><a class="navbar-brand" [routerLink]="['/user-profile', asset.assetId,'details']" routerLinkActive="active" 
+        <td><button><a class="navbar-brand" [routerLink]="[asset.assetId,'details']" routerLinkActive="active" 
           [routerLinkActiveOptions]="{exact: true}">Details</a></button>
           <br></td>
-          <td><button><a class="navbar-brand" [routerLink]="['/user-profile', asset.assetId,'update',currentUser!.id]" routerLinkActive="active" 
+          <td><button><a class="navbar-brand" [routerLink]="[asset.assetId,'update',currentUser!.id]" routerLinkActive="active" 
           [routerLinkActiveOptions]="{exact: true}">Update</a></button>
           <br></td>
       </tr>

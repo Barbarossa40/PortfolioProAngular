@@ -33,13 +33,18 @@ import { UserAddTransactionComponent } from './user-add-transaction/user-add-tra
     CommonModule,
     AssetModule,
     RouterModule.forChild([
+      {
+        path: '',
+        canActivate:[AuthGuard],
+        component:UserProfileComponent,
+      },
     {
-    path: 'user-profile/:id/details',
+    path: ':id/details',
      component: UserAssetDetails,
      resolve:{resolvedAsset: AssetResolver}
     },
     {
-      path: 'user-profile/:id/update/:uid',  
+      path: ':id/update/:uid',  
       component: PortfolioUpdateComponent,
       resolve:{resolvedTransactions: TransactionsResolver,},
       children: [
@@ -56,8 +61,7 @@ import { UserAddTransactionComponent } from './user-add-transaction/user-add-tra
     {
     path: 'portfolio-add',
     component: AddUserAssetComponent,
-    resolve:{resolvedAsset: AssetResolver,
-             resolvedTransactions: TransactionsResolver}
+    resolve:{resolvedAsset: AssetResolver}
     } 
     ]),
     FormsModule,

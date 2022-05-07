@@ -20,8 +20,9 @@ const routes: Routes = [
   },
   {
     path: 'user-profile',
-    component:UserProfileComponent,
-    canActivate:[AuthGuard]
+    canActivate:[AuthGuard],
+    data: { preload: false },
+    loadChildren: () =>import('./user/user.module').then(m=>m.UserModule)
   },
   {
     path: 'search-stock',

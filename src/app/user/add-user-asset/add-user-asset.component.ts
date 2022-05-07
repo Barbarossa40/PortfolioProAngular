@@ -39,6 +39,7 @@ export class AddUserAssetComponent implements OnInit {
 
   ngOnInit(): void { 
   this.route.data.subscribe(data =>this.asset=data['resolvedAsset'].userAsset);
+  
    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
 
     this.transactionForm=this.formBuilder.group({
@@ -55,9 +56,25 @@ export class AddUserAssetComponent implements OnInit {
      userId: '',
      priceSnapshot: -1
      } 
-     this._assetService.getStockQuote(this.asset!.stockSymbol)
-     .subscribe({next: resp=> this.transaction.priceSnapshot= resp[0].attributes.last})    
+
+     if(this.asset){
+     if(this.asset?.uuid=='' || null){
+      this.stockPrice();
+     }
+     else{
+       this.cryptoPrice();
+     }
+    }
+  
      
+}
+
+cryptoPrice(){
+  this._assetService.getCoinPrice(this.asset!.uuid!).subscribe({next: resp=> this.transaction.priceSnapshot = +resp.price})
+}
+stockPrice(){
+  this._assetService.getStockQuote(this.asset!.stockSymbol)
+  .subscribe({next: resp=> this.transaction.priceSnapshot= resp[0].attributes.last})   
 }
 
 tickerSubmit(tickerValue:any){ 
@@ -81,7 +98,20 @@ this._userService.postTransaction(this.transaction)
 }
 
 addPortfolio(id:any, ){
-  this._assetService.getAssetById(id).subscribe(resp=> this.asset=resp)}
+
+  this._assetService.getAssetById(id)
+  .subscribe({next:resp=> this.asset=resp,
+              complete:()=>   {if(this.asset?.uuid=='' || undefined){
+                this.stockPrice();
+              }
+              else{
+                this.cryptoPrice();
+              }}
+            })
+
+
+}
+
 
 }
 
