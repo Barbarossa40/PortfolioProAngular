@@ -4,14 +4,24 @@
       <br>
     <button class="btn btn-primary mr-3"
             style="width:250px"
-            type="button" >
-            <a class="navbar-brand" [routerLink]="['/add-asset']" routerLinkActive="active" 
-            [routerLinkActiveOptions]="{exact: true}">Add Asset To Watched</a></button>
+            type="button" 
+            [routerLink]="['/add-asset']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Add Asset To Watched</button>
             <button class="btn btn-primary mr-3"
             style="width:250px"
-            type="button" >
-            <a class="navbar-brand"[routerLink]="['/portfolio-add']" routerLinkActive="active" 
-            [routerLinkActiveOptions]="{exact: true}">Add New Asset To Your Portfolio</a></button>
+            type="button"
+            [routerLink]="['/portfolio-add']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Add New Asset To Your Portfolio</button>
+            <button class="btn btn-primary mr-3"
+            style="width:250px"
+            type="button"
+            [routerLink]="['/NEED TO ADD']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Portfolio Related News</button>
+            <button class="btn btn-primary mr-3"
+            style="width:250px"
+            type="button"
+            [routerLink]="['/NEED TO ADD']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Market Watch</button>
   </div>
 </div>
 <br>
@@ -22,14 +32,15 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Last Transactiond</th>
+        <th>Last Transaction</th>
         <th>Previous Total</th>
         <th> Current Total </th>
         <th> Ref#</th>
         <th> Name</th>
-        <th> Symbol</th>
+        <th> Stock Symbol</th>
         <th> Type</th>
         <th> Avg Price</th>
+        <th>Links</th>
       
       </tr>
     </thead>
@@ -44,13 +55,12 @@
         <td>{{asset.asset?.stockSymbol}}</td>    
         <td>{{asset.asset?.type}}</td>
         <td>{{average[i] | currency}}</td>
-        <br>
-        <td><button><a class="navbar-brand" [routerLink]="[asset.assetId,'details']" routerLinkActive="active" 
-          [routerLinkActiveOptions]="{exact: true}">Details</a></button>
-          <br></td>
-          <td><button><a class="navbar-brand" [routerLink]="[asset.assetId,'update',currentUser!.id]" routerLinkActive="active" 
-          [routerLinkActiveOptions]="{exact: true}">Update</a></button>
-          <br></td>
+        <td>  
+        <a class="navbar-brand" [routerLink]="[asset.assetId,'details']" routerLinkActive="active" 
+          [routerLinkActiveOptions]="{exact: true}">Details</a> /
+          <a class="navbar-brand" [routerLink]="[asset.assetId,'update',currentUser!.id]" routerLinkActive="active" 
+          [routerLinkActiveOptions]="{exact: true}">Update</a>
+        </td>
       </tr>
     </tbody>
   </table>

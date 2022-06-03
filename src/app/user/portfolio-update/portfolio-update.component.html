@@ -75,14 +75,14 @@
                 <br>
               <button class="btn btn-primary mr-3"
                     style="width:80px"
-                    type="button" >
-                    <a class="navbar-brand"[routerLink]="['alter',mostRecent.transactionId]"
-                    routerLinkActive="active">Edit</a></button>
+                    type="button" 
+                   [routerLink]="['alter',mostRecent.transactionId]"
+                    routerLinkActive="active">Edit</button>
               <button class="btn btn-outline-warning"
                      style="width:80px"
-                     type="button" >
-                     <a class="navbar-brand"[routerLink]="['add-transaction']" [queryParams]="{ptotal:mostRecent.transactionId}"                          
-                     routerLinkActive="active">Add</a></button>
+                     type="button"
+                     [routerLink]="['add-transaction']" [queryParams]="{ptotal:mostRecent.transactionId}"                          
+                     routerLinkActive="active">Add</button>
             <button class="btn btn-outline-warning"
                     style="width:80px"
                     type="button"
@@ -122,15 +122,12 @@
     <li><b>Transaction# {{transaction.transactionId}}</b></li>
     <hr>
     <br>
-    <li>Date: {{transaction.transactionTime}}</li>
-    <li>Previous Total: {{transaction.totalAmount - transaction.transactionAmount }}</li>
-    <li>Current Total:  {{transaction.totalAmount}}</li>
-    <li>Name: {{transaction.asset?.assetName}}</li>
-    <li>Symbol: {{transaction.asset?.stockSymbol}}</li>
-    <li>Asset Class : {{transaction.asset?.type}}</li>
+    <li><strong>Date: </strong> {{transaction.transactionTime}}</li>
+    <li><strong>Previous Total:</strong> {{transaction.totalAmount - transaction.transactionAmount }}</li>
+    <li><strong>New Total:</strong>  {{transaction.totalAmount}}</li>
     <br>
-    <button  style="width:80px"><a class="navbar-brand"[routerLink]="['alter',mostRecent.transactionId]"
-        routerLinkActive="active">Edit</a></button>
+    <button  style="width:80px"  type="button" [routerLink]="['alter',mostRecent.transactionId]"
+        routerLinkActive="active">Edit</button>
     <br >
     </ul>
 </div> 
