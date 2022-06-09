@@ -22,6 +22,7 @@ export class UserProfileComponent implements OnInit {
   message:string=''
   today=new Date();
   average!: number[];
+  symbolArray: string []=[];
   
 
   constructor(public _authService :AuthService, private _userService:UserService, private _router:Router ) { }
@@ -38,8 +39,21 @@ export class UserProfileComponent implements OnInit {
 
     this.getAverage(this.currentUser?.id)
     console.log(this.average)
+
+    this.assets.forEach( (symbol) =>{
+      this.symbolArray.push(symbol.asset!.stockSymbol)
+    console.log(this.symbolArray)
+   
+     });
+    
 }
 
+getPortfolioNews(): void {
+  this._router.navigate(["portfolioi-news"], {
+    queryParams: { myArray: this.symbolArray },
+    });
+ 
+}
 private getUserAssets(id:any){
 
   this._userService.getUserAssets(id)

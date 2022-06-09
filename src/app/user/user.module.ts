@@ -14,6 +14,7 @@ import { TransactionsResolver } from './transactions-resolver.service';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { AlterTransactionComponent } from './alter-transaction/alter-transaction.component';
 import { UserAddTransactionComponent } from './user-add-transaction/user-add-transaction.component';
+import { NewsAssetUserComponent } from './news-asset-user/news-asset-user.component';
 
 
 
@@ -27,6 +28,7 @@ import { UserAddTransactionComponent } from './user-add-transaction/user-add-tra
     PortfolioUpdateComponent,
     AlterTransactionComponent,
     UserAddTransactionComponent,
+    NewsAssetUserComponent,
   ],
   imports: [
 
@@ -62,6 +64,11 @@ import { UserAddTransactionComponent } from './user-add-transaction/user-add-tra
     path: 'portfolio-add',
     component: AddUserAssetComponent,
     resolve:{resolvedAsset: AssetResolver}
+    },
+    {
+      path: 'portfolio-news',
+      component: NewsAssetUserComponent,
+      resolve:{resolvedAsset: AssetResolver}
     } 
     ]),
     FormsModule,

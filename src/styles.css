@@ -44,6 +44,7 @@ th {
     text-align: center;
     border: 1px solid rgb(7, 7, 7);
     padding: 7px;
+    overflow-wrap: break-word;
 
     background-color: #2871b4;
     color: white;
